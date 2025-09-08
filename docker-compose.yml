@@ -177,20 +177,6 @@ services:
       - PYTHONPATH=/app/.venv/lib/python3.10/site-packages
     volumes:
       - ./superset:/app/superset
-    entrypoint: >
-      /bin/bash -c "
-      superset db upgrade &&
-      if ! superset fab list-users | grep -q 'admin'; then
-        superset fab create-admin \
-          --username admin \
-          --firstname Admin \
-          --lastname User \
-          --email admin@example.com \
-          --password admin;
-      fi &&
-      superset init &&
-      superset run -h 0.0.0.0 -p 8088
-      "
     restart: unless-stopped
     networks:
       - data-net
